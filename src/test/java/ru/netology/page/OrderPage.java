@@ -15,7 +15,7 @@ public class OrderPage {
         heading.shouldBe(Condition.visible);
     }
 
-    public PaymentPage pay(){
+    public PaymentPage pay() {
         payButton.click();
         return new PaymentPage();
     }

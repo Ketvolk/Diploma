@@ -65,12 +65,20 @@ public class PaymentPage {
         $(".input__sub").shouldBe(visible).shouldHave(exactText("Поле обязательно для заполнения"));
     }
 
+    public void messageIfCardNumberIsIncorrect() {
+        $(".input__sub").shouldBe(visible).shouldHave(exactText("Неверно указан номер карты"));
+    }
+
     public void messageIfPeriodIsIncorrect() {
         $(".input__sub").shouldBe(visible).shouldHave(exactText("Неверно указан срок действия карты"));
     }
 
     public void messageIfExpired() {
         $(".input__sub").shouldBe(visible).shouldHave(exactText("Истёк срок действия карты"));
+    }
+
+    public void messageIfHolderISLong() {
+        $(".input__sub").shouldBe(visible).shouldHave(exactText("Значение не должно превышать 20 символов"));
     }
 
     public String getFieldValue(int index) {

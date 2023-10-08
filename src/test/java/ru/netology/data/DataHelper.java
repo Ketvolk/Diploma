@@ -1,7 +1,6 @@
 package ru.netology.data;
 
 import com.github.javafaker.Faker;
-import lombok.Value;
 
 
 import java.time.LocalDate;
@@ -17,7 +16,7 @@ public class DataHelper {
     }
 
     public static String getValidInactiveCard() {
-        return ("4444 4444 4444 4443");
+        return ("4444 4444 4444 4442");
     }
 
 
@@ -33,30 +32,42 @@ public class DataHelper {
         return ("4444 4444 4444 444");
     }
 
-    public static long generateValidAddDays() {
+
+    public static LocalDate generateValidPeriod() {
         Faker faker = new Faker();
-        return faker.number().numberBetween(0, 1_827);
+        long addDays = faker.number().numberBetween(1, 1_827);
+        return LocalDate.now().plusDays(addDays);
     }
 
-
     public static String generateValidMonth() {
-        return LocalDate.now().plusDays(generateValidAddDays()).format(DateTimeFormatter.ofPattern("MM"));
+        return generateValidPeriod().format(DateTimeFormatter.ofPattern("MM"));
     }
 
     public static String generateInvalidMonth() {
         int max = 99;
-//        Double month = (Math.random() * ++max) + 13;
         return String.valueOf(Math.random() * ++max) + 0;
     }
 
     public static String generateValidYear() {
-        return LocalDate.now().plusDays(generateValidAddDays()).format(DateTimeFormatter.ofPattern("yy"));
+        return generateValidPeriod().format(DateTimeFormatter.ofPattern("yy"));
+    }
+
+    public static String generateCurrentYear() {
+        return LocalDate.now().format(DateTimeFormatter.ofPattern("yy"));
+    }
+
+    public static LocalDate generateExpiredPeriod() {
+        Faker faker = new Faker();
+        long subDays = faker.number().numberBetween(1, 1_000);
+        return LocalDate.of(Integer.parseInt(generateCurrentYear()), 1, 1).minusDays(subDays);
     }
 
     public static String generateExpiredYear() {
-        Faker faker = new Faker();
-        long subDays = faker.number().numberBetween(0, 1_000);
-        return LocalDate.now().minusDays(subDays).format(DateTimeFormatter.ofPattern("yy"));
+        return generateExpiredPeriod().format(DateTimeFormatter.ofPattern("yy"));
+    }
+
+    public static String generateExpiredMonth() {
+        return generateExpiredPeriod().format(DateTimeFormatter.ofPattern("MM"));
     }
 
     public static String generateInvalidYear() {
@@ -99,9 +110,9 @@ public class DataHelper {
                 .toString();
     }
 
-
     public static String generateValidCVCCode() {
-        return String.valueOf(Math.random() * (899) + 100);
+        Faker faker = new Faker();
+        return String.valueOf(faker.number().numberBetween(100, 899));
     }
 
     public static String generateSymbol() {
@@ -116,9 +127,7 @@ public class DataHelper {
 
     public static String generateNumbers(int count) {
         Faker faker = new Faker();
-        return faker.number().digits(count);
+        long value = faker.number().randomNumber(count, true);
+        return String.valueOf(value);
     }
-
-
-
 }

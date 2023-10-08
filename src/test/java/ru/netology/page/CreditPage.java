@@ -30,31 +30,32 @@ public class CreditPage {
         cardNumber.setValue(cardInput);
     }
 
-    public void fillMonth(String monthInput){
+    public void fillMonth(String monthInput) {
         month.setValue(monthInput);
     }
 
-    public void fillYear(String yearInput){
+    public void fillYear(String yearInput) {
         year.setValue(yearInput);
     }
 
-    public void fillHolder(String holderInput){
+    public void fillHolder(String holderInput) {
         holder.setValue(holderInput);
     }
 
-    public void fillCVC(String cvcInput){
+    public void fillCVC(String cvcInput) {
         cvc.setValue(cvcInput);
     }
 
-    public void continueClick(){
+    public void continueClick() {
         button.click();
     }
+
     public void notificationIfSuccess() {
         $(".notification_status_ok").shouldBe(Condition.visible, Duration.ofSeconds(15)).shouldHave(exactText("Успешно\n" + "Операция одобрена Банком."));
     }
 
     public void notificationIfFailure() {
-        $(".notification_status_error").shouldBe(Condition.visible,Duration.ofSeconds(15)).shouldHave(exactText("Ошибка\n" + "Ошибка! Банк отказал в проведении операции."));
+        $(".notification_status_error").shouldBe(Condition.visible, Duration.ofSeconds(15)).shouldHave(exactText("Ошибка\n" + "Ошибка! Банк отказал в проведении операции."));
     }
 
     public void messageIfIncorrect() {
@@ -65,6 +66,10 @@ public class CreditPage {
         $(".input__sub").shouldBe(visible).shouldHave(exactText("Поле обязательно для заполнения"));
     }
 
+    public void messageIfCardNumberIsIncorrect() {
+        $(".input__sub").shouldBe(visible).shouldHave(exactText("Неверно указан номер карты"));
+    }
+
     public void messageIfPeriodIsIncorrect() {
         $(".input__sub").shouldBe(visible).shouldHave(exactText("Неверно указан срок действия карты"));
     }
@@ -72,6 +77,11 @@ public class CreditPage {
     public void messageIfExpired() {
         $(".input__sub").shouldBe(visible).shouldHave(exactText("Истёк срок действия карты"));
     }
+
+    public void messageIfHolderISLong() {
+        $(".input__sub").shouldBe(visible).shouldHave(exactText("Значение не должно превышать 20 символов"));
+    }
+
 
     public String getFieldValue(int index) {
         return fields.get(index).getAttribute("value");
